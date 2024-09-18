@@ -4,8 +4,8 @@ initPrintOut(document.getElementById("txtOut"));
 
 printOut("--- Part 1 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-2 + 3 * 
-printOut("Replace this with you answer!");
+let answer1 = 2 + (3 * (2 - 4) * 6);
+printOut("answer = " + answer1);
 printOut(newLine);
 
 printOut("--- Part 2 ----------------------------------------------------------------------------------------------");
@@ -60,21 +60,67 @@ printOut(newLine);
 
 printOut("--- Part 5 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+const NOK = 76 / 8.6;
+const USD = 8.6 / 76;
+let amountUSD = 54;
+const amountNOK = Math.round(amountUSD * NOK);
+printOut(amountUSD + ' dollars is ' + amountNOK + ' kroner');
+amountUSD = Math.round(amountNOK * USD);
+printOut(amountNOK + ' kroner is ' + amountUSD + ' dollars');
 printOut(newLine);
+
+
+
 
 printOut("--- Part 6 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+let text = "There is much between heaven and earth that we do not understand.";
+let numCharacters = text.length;
+let char1 = text.charAt(19);
+let char2 = text.substring(35, 35 + 8);
+let index1 = text.indexOf('earth');
+
+
+printOut(numCharacters.toString());
+printOut(char1);
+printOut(char2);
+printOut(index1.toString());
+
+
+
 printOut(newLine);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+const verdi1 = 5 > 3;
+const verdi2 = 7 >= 7;
+const verdi3 = 'a' > 'b';
+const verdi4 = '1' < 'a';
+const verdi5 = '2500' < 'abcd';
+const verdi6 = 'arne' != 'Thomas';
+const verdi7 = (2 === 5);
+const verdi8 = ('abcd' > 'bcd');
+
+
+printOut('5 > 3 = ' + verdi1.toString());
+printOut('7 >= 7 = ' + verdi2.toString());
+printOut('a > b = ' + verdi3.toString());
+printOut('1 < a = ' + verdi4.toString());
+printOut('2500 < abcd = ' + verdi5.toString());
+printOut('Arne != Thomas = ' + verdi6.toString());
+printOut('(2 === 5) = ' + verdi7.toString());
+printOut('abcd > bcd = ' + verdi8.toString());
+
 printOut(newLine);
 
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
+
+
+
 printOut("Replace this with you answer!");
 printOut(newLine);
 
