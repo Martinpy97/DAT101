@@ -119,18 +119,37 @@ printOut(newLine);
 printOut("--- Part 8 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 
+let textNum = '254';
+let textNum2 = '57.23';
+let textNum3 = '25';
+
+let number1 = Number(textNum);
+let number2 = Number(textNum2);
+let number3 = Number(textNum3);
+
+printOut('254 = ' + number1.toString());
+printOut('57.23 = ' + number2.toString());
+printOut('25 kroner = ' + number3.toString());
 
 
-printOut("Replace this with you answer!");
 printOut(newLine);
 
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+let r = Math.floor(Math.random() * 360) + 1;
+
+printOut(r.toString());
 printOut(newLine);
 
 /* Task 10*/
 printOut("--- Part 10 ---------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-printOut("Replace this with you answer!");
+
+let totalDays = 131;
+let weeks = Math.floor(totalDays / 7);
+let days = totalDays % 7;
+
+
+printOut('131 days is ' + weeks + ' weeks and ' + days + ' days');
 printOut(newLine);
