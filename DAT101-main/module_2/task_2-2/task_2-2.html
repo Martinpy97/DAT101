@@ -11,19 +11,41 @@
     </div>
     <ol>
       <li>Where should you use constants, and where should you use variables? Can they all be constants?</li>
-      <p>[Replace this with you answer]</p>
+      <p>
+        const skal man bruke når man vet at variabelen ikke skal endres i ettertid og let kan man bruke der det er meningen at den skal endres i ettertid.<br />
+        Man burde bruke const vanligvis, frem til du lager en variabel du vet skal endres. For å unngå at du endrer variabler med uhell senere.
+      </p>
+
       <li>How do parentheses affect the arithmetic outcome of an expression?</li>
-      <p>[Replace this with you answer]</p>
+
+      <p>Parenteser bestemmer rekkefølgen på operasjoner i et uttrykk og er derfor viktig å bruke riktig for å få riktig resultat.</p>
+
       <li>How do we limit floating-point numbers to a given number of decimals?</li>
-      <p>[Replace this with you answer]</p>
+
+      <p>
+        Man kan bruke "toFixed();" for å formatere et tall til spesifisert antall desimaler. <br />
+        For eksempel: let tall = 123.1234 <br />
+        let formatertTall = tall.toFixed(2); = 123.12
+      </p>
+
       <li>How can we compare two floating-point values to see if they are equal (is 12.199999 the same as 12.2)?</li>
-      <p>[Replace this with you answer]</p>
+      <p>
+        Jeg har sett kunngjøringen om denne, og 12.199999 er ikke det samme tallet som 12.2, fordi det er en differanse <br />
+        på 0.000001. Vi må se på differansen og se om den er innenfor grensen på akseptverdien. <br />
+        ((12.2 - 12.199999) < 0.01) og hvis det er True, så sier vi at tallene er like.
+      </p>
+
       <li>What do comparison operators return, and how can we check if they are FALSE or TRUE?</li>
-      <p>[Replace this with you answer]</p>
+      <p>
+        Sammenligningsoperatorer returnerer en ''boolean value'' som er (True or False) basert på resultat av input. <br />
+        Eksempel på dette kan være: "5 == 2 = False" fordi tallene er ikke like og "5 != 2 = True" fordi tallene er ulike.
+      </p>
+
       <li>How does the Math.random() function work, and what can it be used for?</li>
-      <p>[Replace this with you answer]</p>
+      <p>Math.random() genererer tilfeldige desimaltall mellom 0 og 1 og kan brukes i forskjellige ting som for eksempel spill eller simuleringer. <br /></p>
+
       <li>What is modulus (%), and when do we need this operator in mathematical operations?</li>
-      <p>[Replace this with you answer]</p>
+      <p>% er en operator som returnerer resten etter divisjon mellom tall.</p>
     </ol>
     <script type="module" src="./task_2-2.mjs" defer></script>
   </body>
