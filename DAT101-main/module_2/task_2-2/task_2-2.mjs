@@ -5,7 +5,7 @@ initPrintOut(document.getElementById("txtOut"));
 printOut("--- Part 1 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 let answer1 = 2 + (3 * (2 - 4) * 6);
-printOut("answer = " + answer1);
+printOut("2 + (3 * (2 - 4) * 6) = " + answer1);
 printOut(newLine);
 
 printOut("--- Part 2 ----------------------------------------------------------------------------------------------");
@@ -13,9 +13,9 @@ printOut("--- Part 2 -----------------------------------------------------------
 const millInInch = 25.4;
 const millInMeters = 1000;
 const meters = 25.34;
-const answer = meters / millInMeters * millInInch;
+const answer = (meters * millInMeters) / millInInch;
 const exactAnswer = answer.toFixed(2);
-printOut('exact answer = ' + exactAnswer.toString());
+printOut('25 meters and 34 centimeters  = ' + exactAnswer.toString());
 printOut(newLine);
 
 printOut("--- Part 3 ----------------------------------------------------------------------------------------------");
@@ -30,7 +30,7 @@ const part3_answer =
 14 + 
 (45 / secondsInMinute);
 
-printOut('part3_answer = ' + part3_answer.toString());
+printOut('3 days, 12 hours, 14 minutes and 45 seconds = ' + part3_answer.toString());
 printOut(newLine);
 
 printOut("--- Part 4 ----------------------------------------------------------------------------------------------");
@@ -82,11 +82,11 @@ let char1 = text.charAt(19);
 let char2 = text.substring(35, 35 + 8);
 let index1 = text.indexOf('earth');
 
-
-printOut(numCharacters.toString());
-printOut(char1);
-printOut(char2);
-printOut(index1.toString());
+printOut('There is much between heaven and earth that we do not understand.');
+printOut('The text has ' + numCharacters.toString() + ' characters');
+printOut('The character at position 19 is: ' + char1);
+printOut('The substring from 35 and 8 places is: ' + char2);
+printOut('The word "    earth" starts at position ' + index1.toString());
 
 
 
@@ -127,9 +127,9 @@ let number1 = Number(textNum);
 let number2 = Number(textNum2);
 let number3 = Number(textNum3);
 
-printOut('254 = ' + number1.toString());
-printOut('57.23 = ' + number2.toString());
-printOut('25 kroner = ' + number3.toString());
+printOut('"254" = ' + number1.toString());
+printOut('"57.23" = ' + number2.toString());
+printOut('"25 kroner" = ' + number3.toString());
 
 
 printOut(newLine);
@@ -137,9 +137,9 @@ printOut(newLine);
 printOut("--- Part 9 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
 
-let r = Math.floor(Math.random() * 360) + 1;
+let r = Math.ceil(Math.random() * 360);
 
-printOut(r.toString());
+printOut('Math.ceil(Math.random() * 360) = ' + r.toString());
 printOut(newLine);
 
 /* Task 10*/
