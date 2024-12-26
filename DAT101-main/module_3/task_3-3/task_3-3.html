@@ -10,8 +10,46 @@
       <span id="txtOut" style="white-space: nowrap"></span>
     </div>
     <ol>
-      <li>[Write the question here, and copy this for more questions]</li>
-      <p>[Write your answer here, and copy this for more answers]</p>
+      <li>What is the difference between invoking and creating a function?</li>
+      <p>
+        Når man oppretter en funksjon, så definerer du den. eksempel "function eksempel() { PrintOut("Hei");} <br />
+        Når man kaller på den så bruker man den ved å skrive "eksempel();"
+      </p>
+
+      <li>Explain the syntax regarding semicolons and code blocks.</li>
+      <p>
+        Semikolon brukes i JavaScript for å markere slutten på en setning eller en kommando,<br />
+        som for eksempel når du tildeler verdier eller utfører beregninger. Eksempel: "let x = 5;"<br />
+        <br />
+        Kodeblokker brukes for å gruppere flere linjer med kode sammen, vanligvis innenfor funksjoner, løkker eller betingelser. <br />
+        De bruker "curly brackets" { }. Eksempel:"if (x > 0) { PrintOut("positivt tall"); }"
+      </p>
+      <li>What happens when we try to store values from a function when it doesn't return any?</li>
+      <p>
+        Når en funksjon ikke returnerer noe, betyr det at funksjonen ikke gir noen verdi tilbake til koden som kaller på den. <br />
+        Hvis du prøver å lagre resultatet av en funksjon som ikke returnerer noe, vil variabelen som lagrer verdien bli undefined.
+      </p>
+
+      <li>How do we separate parameters from each other when creating a function?</li>
+      <p>
+        Når du lager en funksjon og definerer dens parametere, separeres de med komma. <br />
+        Parametrene er plassholdere for verdier som vil bli sendt til funksjonen når den kalles.
+      </p>
+      <li>Explain how parameter names are related during the invocation and creation of a function.</li>
+      <p>
+        Når du lager en funksjon, definerer du parameternavnene. Når du kaller på funksjonen, sender du verdier (argumenter) til funksjonen. <br />
+        Parametrene i funksjonen vil da bruke de verdiene som er sendt som argumenter.
+      </p>
+      <li>Explain why a parameter is undefined when a function call is missing a parameter.</li>
+      <p>
+        Når en funksjon er kalt uten at en parameter er sendt med, blir verdien for den manglende parameteren automatisk satt til undefined. <br />
+        Dette skjer fordi funksjonen forventer et argument, men ikke får det.
+      </p>
+      <li>Explain what happens when we use recursive functions.</li>
+      <p>
+        En rekursiv funksjon er en funksjon som kaller seg selv for å løse et problem. Dette skjer gjentatte ganger til den når et base case, som er en betingelse for at funksjonen skal stoppe. <br />
+        Hvis det ikke finnes et base case, vil funksjonen kalle seg selv uendelig og som vil gi feil.
+      </p>
     </ol>
     <script type="module" src="./task_3-3.mjs" defer></script>
   </body>
