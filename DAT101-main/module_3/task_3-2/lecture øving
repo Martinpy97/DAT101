@@ -1,0 +1,22 @@
+"use strict";
+import { initPrintOut, printOut, newLine } from "../../common/script/utils.mjs";
+initPrintOut(document.getElementById("txtOut"));
+
+//function sum() {
+//  const result = 10 + 20;
+//  printOut("resultat = " + result.toString());
+//}
+//
+//sum();
+
+class Tperson {
+  constructor(aFirstName, aLastName, aEmail) {
+    this.aFirstName = aFirstName;
+    this.aLastName = aLastName;
+    this.email = aEmail;
+  }
+}
+
+const person1 = new Tperson("Kari", "Norman", "kari.norman@norge.no");
+
+console.log(person1.aFirstName + " " + person1.aLastName + " " + person1.email);

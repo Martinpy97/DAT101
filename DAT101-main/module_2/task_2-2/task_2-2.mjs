@@ -86,7 +86,7 @@ printOut('There is much between heaven and earth that we do not understand.');
 printOut('The text has ' + numCharacters.toString() + ' characters');
 printOut('The character at position 19 is: ' + char1);
 printOut('The substring from 35 and 8 places is: ' + char2);
-printOut('The word "    earth" starts at position ' + index1.toString());
+printOut('The word "earth" starts at position ' + index1.toString());
 
 
 
