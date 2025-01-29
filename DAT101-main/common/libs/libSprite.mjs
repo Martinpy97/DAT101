@@ -49,11 +49,18 @@ class TSpriteCanvas {
       this.#ctx.drawImage(this.#img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
   }
+  drawText(aText, aPos){
+    this.#ctx.font = "20px Arial";
+    this.#ctx.fillStyle = "#333333";
+    this.#ctx.textAlign = "right";
+    this.#ctx.fillText(aText, aPos.x, aPos.y);
+  }
 
   clearCanvas() {
     this.#ctx.clearRect(0, 0, this.#cvs.width, this.#cvs.height);
   }
   addEventListener(aType, aListener) {
+    
     this.#cvs.addEventListener(aType, aListener);
   }
   getMousePos(aEvent) {
@@ -121,6 +128,12 @@ class TSprite {
   set posY(aY) {
     this.#pos.y = aY;
     this.boundingBox.y = aY;
+  }
+  get left() {
+    return this.#pos.x;
+  }
+  get right() {
+    return this.#pos.x + this.#spi.width;
   }
 
   setPos(aX, aY) {

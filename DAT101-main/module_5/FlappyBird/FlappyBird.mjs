@@ -44,6 +44,9 @@ export const GameProps = {
   obstacles: [],
   baits: [],
   menu: null,
+  score: 0,
+  bestScore: 0,
+  sounds: {countDown: null, food: null, gameOver: null, dead: null, running: null},
 };
 
 //--------------- Functions ----------------------------------------------//
@@ -69,14 +72,16 @@ function loadGame() {
   pos.y = 100;
   GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, pos);
 
-  spawnObstacle();
-  spawnBait();
-
   requestAnimationFrame(drawGame);
   setInterval(animateGame, 10);
 
   GameProps.menu = new TMenu(spcvs);
+
+
+  GameProps.sounds.running = new libSound.TSoundFile("./Media/running.mp3", true);
 } // end of loadGame
+
+
 
 function drawGame() {
   spcvs.clearCanvas();
@@ -117,9 +122,14 @@ function animateGame() {
       }
       GameProps.hero.update();
       let delObstacleIndex = -1;
+      
       for (let i = 0; i < GameProps.obstacles.length; i++) {
         const obstacle = GameProps.obstacles[i];
         obstacle.update();
+        if (obstacle.right < GameProps.hero.left && !obstacle.hasPassed) {
+          GameProps.menu.incScore(20);
+          obstacle.hasPassed = true;
+        }
         if (obstacle.posX < -100) {
           delObstacleIndex = i;
         }
@@ -141,6 +151,7 @@ function animateGame() {
       }
       if (delBaitIndex >= 0) {
         GameProps.baits.splice(delBaitIndex, 1);
+        GameProps.menu.incScore(10);
       }
       break;
     case EGameStatus.idle:
@@ -170,6 +181,17 @@ function spawnBait() {
   }
 }
 
+export function starGame() {
+  GameProps.status = EGameStatus.playing;
+  GameProps.hero = new THero(spcvs, SpriteInfoList.hero1, new lib2d.TPosition(100, 100));
+  GameProps.obstacles = [];
+  GameProps.baits = [];
+  GameProps.menu.reset();
+
+  spawnObstacle();
+  spawnBait();
+  GameProps.sounds.running.play();
+}
 //--------------- Event Handlers -----------------------------------------//
 
 function setSoundOnOff() {
