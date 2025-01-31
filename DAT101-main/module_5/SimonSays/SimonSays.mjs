@@ -19,15 +19,35 @@ export const SpriteInfoList = {
 const cvs = document.getElementById("cvs");
 const spcvs = new libSprite.TSpriteCanvas(cvs);
 
+export const EgameStatusType = {idle: 0, computer: 1, player: 2, gameover: 3};
+
 export const gameProps = {
   Background: new libSprite.TSprite(spcvs, SpriteInfoList.Background, new lib2d.TPoint(0, 0)),
-  colorButton: new TcolorButton(spcvs, SpriteInfoList.ButtonYellow),
+  
+  GameCenter: new lib2d.TPosition(SpriteInfoList.Background.width / 2, SpriteInfoList.Background.height / 2),
+  status: EgameStatusType.computer,
+  //prettier-ignore
+  colorButtons:[
+    new TcolorButton(spcvs, SpriteInfoList.ButtonYellow),
+    new TcolorButton(spcvs, SpriteInfoList.ButtonBlue),
+    new TcolorButton(spcvs, SpriteInfoList.ButtonRed),
+    new TcolorButton(spcvs, SpriteInfoList.ButtonGreen),
+    
+  ],
+  sequence: [],
+  seqIndex: 0, //index for å holde styr på hvilken knapp i sekvensen vi er på
+  activeButton: null, //ingen knapp er aktiv i starten
+ 
 };
+
+
 
 //--------------- Functions ----------------------------------------------//
 function loadGame(){
   cvs.width = gameProps.Background.width;
   cvs.height = gameProps.Background.height;
+  gameProps.sequence.push(gameProps.colorButtons[0]); //simulerer at vi har en sekvens
+  spawnSequence();
 
   drawGame();
 }
@@ -35,11 +55,48 @@ function loadGame(){
 function drawGame(){
   spcvs.clearCanvas();
   gameProps.Background.draw();
-  gameProps.colorButton.draw();
+ for (let i = 0; i < gameProps.colorButtons.length; i++){
+  gameProps.colorButtons[i].draw();
+ }
 
   requestAnimationFrame(drawGame);
 }
 
+function setMouseDown(){
+  gameProps.activeButton.onMouseDown();
+  setTimeout(setMouseUp, 1000);
+  
+}
+
+function setMouseUp(){
+  let done = false;
+  if(gameProps.seqIndex < gameProps.sequence.length - 1){
+    //her er det flere knapper i igjen i sekvensen
+    gameProps.activeButton.onMouseUp();
+    gameProps.seqIndex++;
+  }else{
+    //sekvensen er ferdig
+    gameProps.activeButton.onMouseUp();
+    gameProps.seqIndex = 0;
+    done = true;
+  }
+  gameProps.activeButton = gameProps.sequence[gameProps.seqIndex];
+  if(!done){
+    setTimeout(setMouseDown, 1000);
+  
+}else{
+  gameProps.status = EgameStatusType.player;//venter på at spilleren skal trykke på en knapp
+}
+}
+function spawnSequence(){
+  const index = Math.floor(Math.random() * gameProps.colorButtons.length);
+  const button = gameProps.colorButtons[index];
+  gameProps.sequence.push(button);
+  gameProps.seqIndex = 0;
+  gameProps.activeButton = gameProps.sequence[0];
+  gameProps.status = EgameStatusType.computer;
+  setTimeout(setMouseDown, 1000);
+}
 //--------------- Event Handlers -----------------------------------------//
 
 //--------------- Main Code ----------------------------------------------//
