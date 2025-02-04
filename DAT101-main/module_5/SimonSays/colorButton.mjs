@@ -1,7 +1,7 @@
 "use strict"
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
-import { gameProps, EgameStatusType } from "./SimonSays.mjs";
+import { gameProps, EgameStatusType, spawnSequence } from "./SimonSays.mjs";
 
 
 
@@ -33,8 +33,17 @@ export class TcolorButton extends libSprite.TSpriteButton{
         this.index = 1;
         this.sound.play();
     }
+
+    onLeave(aEvent){
+        if(aEvent.buttons !== 0){
+            this.index = 0;
+            this.sound.stop();
+        }
+    }
+
     // vi må løse dette med polymorphism når musa slippes på smultringen.
     onMouseUp(aPoint){
+        if(this.index != 1) return;
         this.index = 0;
         this.sound.stop();
         if(gameProps.status !== EgameStatusType.player){
@@ -42,8 +51,19 @@ export class TcolorButton extends libSprite.TSpriteButton{
         }
         if(gameProps.activeButton === this){
             console.log("riktig knapp")
+            if(gameProps.seqIndex < gameProps.sequence.length -1){
+                gameProps.seqIndex++;
+                gameProps.activeButton = gameProps.sequence[gameProps.seqIndex];
+            }else{
+                //nå er vi på sist knapp i sekvensen, computeren sin tur
+                gameProps.spnRound.value++;
+                spawnSequence();
+            }
         }else{
             console.log("feil knapp")
+            
+            gameProps.buttonStartEnd.index = 1;
+            gameProps.buttonStartEnd.visible = true;
         }
     }
 
