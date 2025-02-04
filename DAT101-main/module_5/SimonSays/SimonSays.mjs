@@ -1,6 +1,7 @@
 "use strict";
 //--------------- Objects and Variables ----------------------------------//
 import lib2d from "../../common/libs/lib2d_v2.mjs";
+import libSound from "../../common/libs/libSound.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { TcolorButton } from "./colorButton.mjs";
 
@@ -37,6 +38,12 @@ export const gameProps = {
   sequence: [],
   seqIndex: 0, //index for å holde styr på hvilken knapp i sekvensen vi er på
   activeButton: null, //ingen knapp er aktiv i starten
+  buttonStartEnd: new libSprite.TSpriteButton(
+    spcvs, 
+    SpriteInfoList.ButtonStartEnd,
+    SpriteInfoList.ButtonStartEnd.dst,
+    lib2d.TCircle
+  )
  
 };
 
@@ -46,10 +53,23 @@ export const gameProps = {
 function loadGame(){
   cvs.width = gameProps.Background.width;
   cvs.height = gameProps.Background.height;
+  gameProps.buttonStartEnd.onClick = startGame;
+  setDisabledButtons(true);
+  drawGame();
+
+  
+}
+function startGame(){
+  gameProps.buttonStartEnd.visible = false;
+  setDisabledButtons(false);
+  libSound.activateAudioContext();
+  gameProps.colorButtons[0].sound = new libSound.TSoundWave(4, "C", "sine");
+  gameProps.colorButtons[1].sound = new libSound.TSoundWave(4, "D", "sine");
+  gameProps.colorButtons[2].sound = new libSound.TSoundWave(4, "E", "sine");
+  gameProps.colorButtons[3].sound = new libSound.TSoundWave(4, "F", "sine");
   gameProps.sequence.push(gameProps.colorButtons[0]); //simulerer at vi har en sekvens
   spawnSequence();
-
-  drawGame();
+  
 }
 
 function drawGame(){
@@ -58,8 +78,15 @@ function drawGame(){
  for (let i = 0; i < gameProps.colorButtons.length; i++){
   gameProps.colorButtons[i].draw();
  }
+  gameProps.buttonStartEnd.draw();
 
   requestAnimationFrame(drawGame);
+}
+
+function setDisabledButtons(aDisabled){
+  for(let i = 0; i < gameProps.colorButtons.length; i++){
+    gameProps.colorButtons[i].disable = aDisabled;
+  }
 }
 
 function setMouseDown(){
