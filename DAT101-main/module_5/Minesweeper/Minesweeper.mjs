@@ -2,7 +2,7 @@
 import lib2d from "../../common/libs/lib2d_v2.mjs";
 import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { TGameBoard } from "./GameBoard.mjs";
-import { TTile } from "./Tile.mjs";
+import { TTile, forEachTile } from "./Tile.mjs";
 
 //-----------------------------------------------------------------------------------------
 //----------- variables and object --------------------------------------------------------
@@ -36,11 +36,10 @@ const spcvs = new libSprite.TSpriteCanvas(cvs);
 
 const selectDifficulty = document.getElementById("selectDifficulty");
 
-
 export const gameProps = {
   gameBoard: null,
-  tile: null,
-}
+  tiles: [],
+};
 //-----------------------------------------------------------------------------------------
 //----------- functions -------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
@@ -55,17 +54,42 @@ export function newGame() {
   cvs.height = gameLevel.Tiles.Row * SpriteInfoList.ButtonTile.height + SpriteInfoList.Board.TopMiddle.height + SpriteInfoList.Board.BottomMiddle.height;
   spcvs.updateBoundsRect();
   gameProps.gameBoard = new TGameBoard(spcvs, SpriteInfoList.Board, new lib2d.TPoint(0, 0));
-  const pos = new lib2d.TPoint(20, 132);
-  gameProps.tile = new TTile(spcvs, SpriteInfoList.ButtonTile, pos);
+  
+  for (let row = 0; row < gameLevel.Tiles.Row; row++) {
+    const rows = [];
+
+    for (let col = 0; col < gameLevel.Tiles.Col; col++) {
+      rows.push(new TTile(spcvs, SpriteInfoList.ButtonTile, row, col));
+    }
+    gameProps.tiles.push(rows);
+  }
+  //Lag alle minene i spillet basert på gameLevel.Mines
+  let mineCounter = 1; //hvor mange miner som er lagt ut
+  do {
+  const row = Math.floor(Math.random() * gameLevel.Tiles.Row);
+  const col = Math.floor(Math.random()* gameLevel.Tiles.Col);
+  const tile = gameProps.tiles[row][col];
+  tile.index = 2; //simulerer åpen knapp, test
+  if(!tile.isMine){
+  tile.isMine = true;
+  mineCounter++;
+  }
+  }while (mineCounter <= gameLevel.Mines);
+
 }
+
+
 
 
 function drawGame() {
   spcvs.clearCanvas();
   gameProps.gameBoard.draw();
-  gameProps.tile.draw();
+  forEachTile(drawTile);
   requestAnimationFrame(drawGame);
-  
+}
+
+function drawTile(aTile) {
+  aTile.draw();
 }
 
 //-----------------------------------------------------------------------------------------
