@@ -81,11 +81,29 @@ export class TScoreBoard {
     this.#spTime.value = 0;
     this.#spMines.value = gameLevel.Mines;
 
-    let newX = (this.#spcvs.canvas.width / 2) - (SpriteInfoList.ButtonSmiley.width / 2);
-    this.#spSmiley.x = newX;
+    const pos = new lib2d.TPoint(112, 22);
 
-    newX = this.#spcvs.canvas.width - 70;
-    this.#spTime.x = newX; 
+    pos.x = (this.#spcvs.canvas.width / 2) - (SpriteInfoList.ButtonSmiley.width / 2);
+    this.#spSmiley.x = pos.x;
+
+    pos.x = this.#spcvs.canvas.width - 70;
+    this.#spTime = new libSprite.TSpriteNumber(this.#spcvs, SpriteInfoList.Numbers, pos); 
+    this.#spTime.justify = libSprite.ESpriteNumberJustifyType.Right;
+    this.#spTime.digits = 3;
+    this.#spTime.value = 0;
+
+
+    this.#hndTime = setInterval(this.#increaseTime, 1000);
   }
+
+
+    get mineCounter(){
+        return this.#spMines.value;
+    }
+
+    set mineCounter(aValue){
+        this.#spMines.value = aValue;
+    }
+
 
 }

@@ -66,11 +66,34 @@ export class TTile extends libSprite.TSpriteButton {
   }
 
   onMouseDown(aEvent) {
+    if(aEvent.buttons === 2){
+      return
+    }else if(this.index === 3){
+      return;
+    }
+
     this.index = 1;
     gameProps.ScoreBoard.spSmiley.index = 1;
   }
 
   onMouseUp(aEvent) {
+    if(aEvent.button === 2){ 
+      if(this.index === 3){
+        this.index = 0;
+        //Her må dere øke mine telleren
+        gameProps.ScoreBoard.mineCounter++;
+      }else{
+        //Her må dere redusere mine telleren
+        if(gameProps.ScoreBoard.mineCounter > 0){
+          this.index = 3;
+          gameProps.ScoreBoard.mineCounter--;
+        }
+      }
+      return;
+    }else if(this.index === 3){
+      return;
+    }
+
     if (this.#isMine) {
       this.index = 4;
       gameProps.ScoreBoard.spSmiley.index = 2;
@@ -88,7 +111,22 @@ export class TTile extends libSprite.TSpriteButton {
       }
     }
     this.disable = true;
+
+    gameProps.openTiles = 0;
+    forEachTile(this.#countOpenTiles);
+
+    const toalTiles = gameLevel.Tiles.Row * gameLevel.Tiles.Col;
+    const tilesLeft = toalTiles - gameProps.openTiles;
+    if(tilesLeft === gameLevel.Mines) {
+      gameProps.ScoreBoard.spSmiley.index = 4;
+      setGameOver();
+      
+    }
+    
+
   }
+
+  
 
   onLeave(aEvent) {
     if (aEvent.buttons === 1) {
@@ -135,14 +173,14 @@ export class TTile extends libSprite.TSpriteButton {
   }
 
   get isOpen() {
-    if (this.index !== 0 && this.index !== 1) {
+    if (this.index !== 0 && this.index !== 1 && this.index !== 3) {
       return true;
     }
     return false;
   }
 
   OpenUp(){
-    if(this.isOpen){
+    if(this.isOpen || this.index === 3){
       return;
     }
     this.index = 2;
@@ -165,6 +203,17 @@ export class TTile extends libSprite.TSpriteButton {
       this.index = 5;
     }
   }
+
+
+  #countOpenTiles(aTile){
+    if(!aTile.isOpen){
+      return;
+    }
+    gameProps.openTiles++;
+  }
+
+
+
 
 } // End of class TTile
 
