@@ -3,7 +3,7 @@ import libSprite from "../../common/libs/libSprite.mjs";
 import lib2d from "../../common/libs/lib2d.mjs";
 import { GameProps } from "./FlappyBird.mjs";
 
-class TObstacle {
+class TObstacle { 
   #upper;
   #lower;
   #spi;

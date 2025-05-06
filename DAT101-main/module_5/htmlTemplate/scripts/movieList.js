@@ -73,4 +73,5 @@ const movieList =
   }
 ];
 
+
 export default movieList;
