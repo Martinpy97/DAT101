@@ -7,6 +7,7 @@ import libSprite from "../../common/libs/libSprite_v2.mjs";
 import { TGameBoard, GameBoardSize, TBoardCell } from "./gameBoard.mjs";
 import { TSnake, EDirection } from "./snake.mjs";
 import { TBait } from "./bait.mjs";
+import { Tmenu } from "./menu.mjs";
 
 //-----------------------------------------------------------------------------------------
 //----------- variables and object --------------------------------------------------------
@@ -34,9 +35,12 @@ export const SheetData = {
 
 export const GameProps = {
   gameBoard: null,
-  gameStatus: EGameStatus.Idle,
-  snake: null,
-  bait: null
+  gameStatus: EGameStatus.Playing,
+  snake: [],
+  bait: null,
+  score: 0,
+  menu: null,
+  
 };
 
 //------------------------------------------------------------------------------------------
@@ -48,14 +52,27 @@ export function newGame() {
   GameProps.snake = new TSnake(spcvs, new TBoardCell(5, 5)); // Initialize snake with a starting position
   GameProps.bait = new TBait(spcvs); // Initialize bait with a starting position
   gameSpeed = 4; // Reset game speed
+  //GameProps.menu = new Tmenu(spcvs); // Initialize menu
+  
 }
-
+export function drawScore() {
+  const ctx = cvs.getContext("2d");
+  ctx.font = "20px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(`Score: ${GameProps.score}`, 10, 20); // Display score at the top-left corner
+}
 export function bateIsEaten() {
-
   console.log("Bait eaten!");
-  /* Logic to increase the snake size and score when bait is eaten */
 
-  increaseGameSpeed(); // Increase game speed
+  // Relocate the bait to a new position
+  
+  GameProps.bait.update();
+  
+  // Logic to increase the snake size and score when bait is eaten
+  GameProps.score += 1;  // Increment the score
+
+  // Increase game speed
+  increaseGameSpeed();
 }
 
 
@@ -70,6 +87,18 @@ function loadGame() {
   GameProps.gameStatus = EGameStatus.Playing; // change game status to Idle
 
   /* Create the game menu here */ 
+//GameProps.menu = new Tmenu(spcvs);
+
+cvs.addEventListener("click", (event) => {
+  const rect = cvs.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  if (GameProps.gameStatus === EGameStatus.Idle) {
+    GameProps.menu.handleClick(x, y); // Håndter klikk på menyen
+  }
+});
+
 
   newGame(); // Call this function from the menu to start a new game, remove this line when the menu is ready
 
@@ -84,12 +113,18 @@ function drawGame() {
   spcvs.clearCanvas();
 
   switch (GameProps.gameStatus) {
+    case EGameStatus.Idle:
+      // Draw the menu
+      GameProps.menu.draw();
+      break;
     case EGameStatus.Playing:
-    case EGameStatus.Pause:
       GameProps.bait.draw();
       GameProps.snake.draw();
+      drawScore();
+      
       break;
   }
+
   // Request the next frame
   requestAnimationFrame(drawGame);
 }
@@ -101,14 +136,17 @@ function updateGame() {
       if (!GameProps.snake.update()) {
         GameProps.gameStatus = EGameStatus.GameOver;
         console.log("Game over!");
-      }
+      } 
       break;
   }
 }
 
 function increaseGameSpeed() {
-  /* Increase game speed logic here */
-  console.log("Increase game speed!");
+  // Increase the game speed by reducing the interval delay
+  gameSpeed += 2; // Increment the speed multiplier
+  clearInterval(hndUpdateGame); // Clear the current interval
+  hndUpdateGame = setInterval(updateGame, 1000 / gameSpeed); // Set a new interval with the updated speed
+  console.log(`Game speed increased! New speed: ${gameSpeed}`);
 }
 
 
@@ -132,6 +170,13 @@ function onKeyDown(event) {
       break;
     case " ":
       console.log("Space key pressed!");
+      case " ":
+      console.log("Game paused!");
+      if (GameProps.gameStatus === EGameStatus.Playing) {
+        GameProps.gameStatus = EGameStatus.Pause;
+      } else if (GameProps.gameStatus === EGameStatus.Pause) {
+        GameProps.gameStatus = EGameStatus.Playing;
+      }
       /* Pause the game logic here */
       
       break;

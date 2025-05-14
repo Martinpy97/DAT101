@@ -31,6 +31,7 @@ class TSnakePart extends libSprite.TSprite {
   update(){
     this.x = this.boardCell.col * this.spi.width;
     this.y = this.boardCell.row * this.spi.height;
+    
   }
 
 } // class TSnakePart
@@ -169,7 +170,7 @@ class TSnakeBody extends TSnakePart {
         }
         break;
     }
-    this.direction = boardCellInfo.direction;
+    this.direction =   boardCellInfo.direction;
     this.index = spriteIndex;
     super.update();
   }
@@ -209,6 +210,7 @@ class TSnakeTail extends TSnakePart {
     this.direction = boardCellInfo.direction;
     this.index = this.direction;
     super.update();
+    
   }
 
 } // class TSnakeTail
@@ -233,26 +235,53 @@ export class TSnake {
       this.#body[i].draw();
     }
     this.#tail.draw();
+    
   } // draw
+  grow() {
+  }
 
-  //Returns true if the snake is alive
-  update(){
+  
+   update(){
+    let clonePart = null; 
+    let lastBodyPart = this.#body[this.#body.length - 1];
+    clonePart = lastBodyPart.clone();
+
+    
+
+// Klon den siste kroppsdelen eller halen
+
+
     if (this.#isDead) {
       return false; // Snake is dead, do not continue
     }
     if(this.#head.update()) {
-      for (let i = 0; i < this.#body.length; i++) {
+      
+      for (let i = 0; i < this.#body.length; i++) { 
         this.#body[i].update();
+        
+        
       }
-      this.#tail.update();  
+      
+      if(bateIsEaten){
+
+          
+        
+        this.#body.push(clonePart);
+        bateIsEaten = false;
+      }else{  
+        
+        this.#tail.update();
+      } 
+      
     }else if(!this.#isDead){
       this.#isDead = true;
       return false; // Collision detected, do not continue
     }
     return true; // No collision, continue
   }
+  
 
   setDirection(aDirection) {
     this.#head.setDirection(aDirection);
   } // setDirection
-}
+} 
